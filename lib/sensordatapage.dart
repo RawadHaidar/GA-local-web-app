@@ -13,7 +13,7 @@ class SensorDataPage extends StatelessWidget {
       value: dataProvider,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Sensor Data'),
+          title: Text('Sensor Data and Wavelengths'),
         ),
         body: Consumer<DataProvider>(
           builder: (context, provider, child) {
@@ -32,19 +32,21 @@ class SensorDataPage extends StatelessWidget {
                       Text('RX: ${dataSet.rx.map((e) => e.y).toList()}'),
                       Text('RY: ${dataSet.ry.map((e) => e.y).toList()}'),
                       Text('RZ: ${dataSet.rz.map((e) => e.y).toList()}'),
-                      Text('ALT: ${dataSet.alt.map((e) => e.y).toList()}'),
-                      Text(
-                          'Std Dev X: ${dataSet.stdDevX.map((e) => e.y).toList()}'),
-                      Text(
-                          'Std Dev Y: ${dataSet.stdDevY.map((e) => e.y).toList()}'),
-                      Text(
-                          'Std Dev Z: ${dataSet.stdDevZ.map((e) => e.y).toList()}'),
-                      Text(
-                          'Avg Std Dev X: ${dataSet.avgStdDevX.map((e) => e.y).toList()}'),
-                      Text(
-                          'Avg Std Dev Y: ${dataSet.avgStdDevY.map((e) => e.y).toList()}'),
-                      Text(
-                          'Avg Std Dev Z: ${dataSet.avgStdDevZ.map((e) => e.y).toList()}'),
+                      // Text(
+                      //     'Std Dev X: ${dataSet.stdDevX.map((e) => e.y).toList()}'),
+                      // Text(
+                      //     'Std Dev Y: ${dataSet.stdDevY.map((e) => e.y).toList()}'),
+                      // Text(
+                      //     'Std Dev Z: ${dataSet.stdDevZ.map((e) => e.y).toList()}'),
+                      // Text(
+                      //     'Avg Std Dev X: ${dataSet.avgStdDevX.map((e) => e.y).toList()}'),
+                      // Text(
+                      //     'Avg Std Dev Y: ${dataSet.avgStdDevY.map((e) => e.y).toList()}'),
+                      // Text(
+                      //     'Avg Std Dev Z: ${dataSet.avgStdDevZ.map((e) => e.y).toList()}'),
+                      // Add Wavelength data display
+                      // Text(
+                      //     'Wavelength: ${dataSet.wavelength.map((e) => e.y).toList()}'),
                     ],
                   ),
                 );
