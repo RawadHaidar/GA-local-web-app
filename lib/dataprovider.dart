@@ -79,74 +79,10 @@ class DataProvider with ChangeNotifier {
     );
   }
 
-  // void _storeAndResetData() {
-  //   _dataSets.add(_currentData.clone());
-  //   _currentData.clear();
-  //   currentTime = 0;
-  //   notifyListeners();
-  // }
-  void _storeAndResetData() async {
-    // Add current data to the list of datasets
+  void _storeAndResetData() {
     _dataSets.add(_currentData.clone());
-
-    // Get the app's document directory path
-    final directory = await getApplicationDocumentsDirectory();
-    final path = '${directory.path}/sensor_data.csv';
-
-    // Prepare CSV rows
-    List<List<dynamic>> rows = [
-      [
-        'ax',
-        'ay',
-        'az',
-        'rx',
-        'ry',
-        'rz',
-        'fallDetected',
-        'fallstate',
-        'activity',
-        'stepCount',
-        'fluctuationState',
-        'position'
-      ]
-    ];
-
-    for (var dataSet in _dataSets) {
-      for (int i = 0; i < dataSet.ax.length; i++) {
-        rows.add([
-          dataSet.ax[i].y,
-          dataSet.ay[i].y,
-          dataSet.az[i].y,
-          dataSet.rx[i].y,
-          dataSet.ry[i].y,
-          dataSet.rz[i].y,
-          dataSet.falldetected,
-          dataSet.fallstate,
-          dataSet.activity,
-          dataSet.stepCount,
-          dataSet.fluctuationState,
-          dataSet.position,
-        ]);
-      }
-    }
-
-    // Convert the list of rows to CSV format
-    String csv = const ListToCsvConverter().convert(rows);
-
-    // Write to the CSV file in append mode
-    final file = File(path);
-    if (await file.exists()) {
-      // If the file exists, append to it
-      await file.writeAsString(csv, mode: FileMode.append, flush: true);
-    } else {
-      // If the file doesn't exist, create it and write the CSV
-      await file.writeAsString(csv, flush: true);
-    }
-
-    // Reset current data and time
     _currentData.clear();
     currentTime = 0;
-
     notifyListeners();
   }
 
