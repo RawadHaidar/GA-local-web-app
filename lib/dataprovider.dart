@@ -88,7 +88,7 @@ class DataProvider with ChangeNotifier {
 
   void _updateSensorData(String message) {
     try {
-      print('Raw message received: $message');
+      // print('Raw message received: $message');
       final Map<String, dynamic> data = jsonDecode(message);
       // Safely extract data from the JSON object with null checks
       int stepCounter = data['stepCount']?.toInt();
@@ -104,10 +104,9 @@ class DataProvider with ChangeNotifier {
       final String fluctuationState =
           data['isFluctuating'] == 1 ? 'Fluctuation Detected' : 'Stable';
 
-      // Ensure that critical values (ay, ax, az) are not null before proceeding
       if (ax == null || ay == null || az == null) {
         print('Missing or invalid sensor data: ax, ay, or az is null.');
-        return; // Exit the method early if any critical values are null
+        return;
       }
 
       String position = '';
@@ -130,10 +129,7 @@ class DataProvider with ChangeNotifier {
         // Calculate the differences for az
         double azDiff1 = (_prevAz1! - az).abs(); // Current and previous
         double azDiff2 = (_prevAz2! - az).abs(); // Current and previous-2
-        // print(
-        //     "ayDiff1: $ayDiff1, ayDiff2: $ayDiff2, azDiff1: $azDiff1, azDiff2: $azDiff2");
 
-        // Detect a fall if any of the differences are greater than 1.0
         if (ayDiff1 > 0.8 || ayDiff2 > 0.8 || azDiff1 > 0.8 || azDiff2 > 0.8) {
           fallDetected = true;
         }
@@ -157,11 +153,6 @@ class DataProvider with ChangeNotifier {
         fallstate = 'Fall predicted!';
       }
 
-      // if (position == "Straight" &&
-      //     fluctuationState == 'Fluctuation Detected' &&
-      //     activity == 'Standing still') {
-      //   activity = "Walking slowly";
-      //   slowstepcounter = slowstepcounter + 1;
       // }
 
       _addDataPoint(
@@ -176,16 +167,15 @@ class DataProvider with ChangeNotifier {
         fluctuationState: fluctuationState,
         activity: activity,
         stepCount: stepCounter,
-        //  + slowstepcounter,
         position: position,
       );
 
       // Shift the previous values to make room for the new ones
 
-      print("Fluctuation State: $fluctuationState");
-      print("Activity: $activity");
-      print("Step Counter: $stepCounter");
-      print("Position: $position");
+      // print("Fluctuation State: $fluctuationState");
+      // print("Activity: $activity");
+      // print("Step Counter: $stepCounter");
+      // print("Position: $position");
     } catch (e) {
       print('Error parsing sensor data: $e');
     }
@@ -198,12 +188,6 @@ class DataProvider with ChangeNotifier {
     double? rx,
     double? ry,
     double? rz,
-    // double? stdDevX,
-    // double? stdDevY,
-    // double? stdDevZ,
-    // double? avgStdDevX,
-    // double? avgStdDevY,
-    // double? avgStdDevZ,
     bool? fallDetected = false,
     String? fallstate,
     String? activity,
@@ -217,15 +201,6 @@ class DataProvider with ChangeNotifier {
     if (rx != null) _currentData.rx.add(FlSpot(currentTime, rx / 100));
     if (ry != null) _currentData.ry.add(FlSpot(currentTime, ry / 100));
     if (rz != null) _currentData.rz.add(FlSpot(currentTime, rz / 100));
-    // if (stdDevX != null) _currentData.stdDevX.add(FlSpot(currentTime, stdDevX));
-    // if (stdDevY != null) _currentData.stdDevY.add(FlSpot(currentTime, stdDevY));
-    // if (stdDevZ != null) _currentData.stdDevZ.add(FlSpot(currentTime, stdDevZ));
-    // if (avgStdDevX != null)
-    //   _currentData.avgStdDevX.add(FlSpot(currentTime, avgStdDevX));
-    // if (avgStdDevY != null)
-    //   _currentData.avgStdDevY.add(FlSpot(currentTime, avgStdDevY));
-    // if (avgStdDevZ != null)
-    //   _currentData.avgStdDevZ.add(FlSpot(currentTime, avgStdDevZ));
 
     _currentData.falldetected = fallDetected ?? false;
     _currentData.fallstate = fallstate ?? 'None';
@@ -233,6 +208,8 @@ class DataProvider with ChangeNotifier {
     _currentData.stepCount = stepCount ?? 0;
     _currentData.fluctuationState = fluctuationState ?? '';
     _currentData.position = position ?? '';
+
+    print("$currentTime,$ax,$ay,$az,$rx,$ry,$rz,$activity,$fallDetected");
 
     currentTime++;
 
