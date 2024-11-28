@@ -24,7 +24,7 @@ This application visualizes sensor data from the BMA400 sensor in real time, usi
 Below is a screenshot of the line chart displaying the sensor data (`ax`, `ay`, `az`, `rx`, `ry`, `rz`) with a time step of 0.5 seconds.
 
 
-![Sensor Data Chart](C:\Users\Rawad\Desktop\Projects\KICare_Gait_abnormality_and_fall_detection_project\Flutter\GA_local_web_app\ga_local_web_app\assets\images\Capture.JPG)
+![Sensor Data Chart](assets/images/Capture.JPG)
 
 ## Getting Started
 
