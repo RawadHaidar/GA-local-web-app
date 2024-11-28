@@ -56,6 +56,10 @@ For more detailed guidance, refer to the following resources:
 - path_provider Documentation
 - csv Documentation
 
+### Esp8266 coding
+
+The project directory also includes the arduino code, used for coding the ESP8266 NodeMCU.
+
 #### Contributions
 
 Contributions are welcome! Feel free to open issues or submit pull requests.
