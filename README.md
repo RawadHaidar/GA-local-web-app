@@ -21,7 +21,7 @@ This application visualizes sensor data from the BMA400 sensor in real time, usi
 
 ## Screen Preview
 
-Below is a screenshot of the line chart displaying the sensor data (`ax`, `ay`, `az`, `rx`, `ry`, `rz`) with a time step of 0.5 seconds.
+Below is a screenshot of the line chart displaying the sensor data (blue: `ax`, red: `ay`,green: `az`,orange: `rx`,purple: `ry`,yellow: `rz`) with a time step of 0.5 seconds.
 
 
 ![Sensor Data Chart](assets/images/Capture.JPG)
