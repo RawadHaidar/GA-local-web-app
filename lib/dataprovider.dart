@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:ga_local_web_app/dataset_class.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:web_socket_channel/status.dart' as status;
+// import 'package:tflite_flutter/tflite_flutter.dart';
 import 'dart:io'; // For file operations
 import 'package:path_provider/path_provider.dart'; // To get file paths
 import 'package:csv/csv.dart';
@@ -23,6 +24,9 @@ class DataProvider with ChangeNotifier {
 
   // int slowstepcounter = 0;
 
+  // // Callback to notify when new data is received
+  // void Function(double, double, double, double, double, double)? onNewData;
+
   // Track the previous two values of ay, az, and position
   double? _prevAy1;
   double? _prevAy2;
@@ -36,7 +40,7 @@ class DataProvider with ChangeNotifier {
 
     isGenerating = true;
     _connectToWebSocket();
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
       _channel?.sink.add('Requesting data...');
       notifyListeners();
     });
@@ -142,16 +146,16 @@ class DataProvider with ChangeNotifier {
       _prevPosition2 = _prevPosition1;
       _prevPosition1 = position;
 
-      if (fallDetected && position == "Laying") {
-        print("Fall detected!***************");
-        fallstate = 'Fall detected!';
-      }
-      if (fallDetected &&
-          position != "Laying" &&
-          _prevPosition1 != "Standing still") {
-        print("Fall predicted!!!!!!!!!!!!!!!");
-        fallstate = 'Fall predicted!';
-      }
+      // if (fallDetected && position == "Laying") {
+      //   print("Fall detected!***************");
+      //   fallstate = 'Fall detected!';
+      // }
+      // if (fallDetected &&
+      //     position != "Laying" &&
+      //     _prevPosition1 != "Standing still") {
+      //   print("Fall predicted!!!!!!!!!!!!!!!");
+      //   fallstate = 'Fall predicted!';
+      // }
 
       // }
 
@@ -169,13 +173,6 @@ class DataProvider with ChangeNotifier {
         stepCount: stepCounter,
         position: position,
       );
-
-      // Shift the previous values to make room for the new ones
-
-      // print("Fluctuation State: $fluctuationState");
-      // print("Activity: $activity");
-      // print("Step Counter: $stepCounter");
-      // print("Position: $position");
     } catch (e) {
       print('Error parsing sensor data: $e');
     }
